@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Msingi — Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F3EC;
+    --paper-deep:#EFEADB;
+    --ink:#201D18;
+    --ink-soft:#54503f;
+    --green:#2F4A3C;
+    --green-deep:#20362b;
+    --gold:#C89B3C;
+    --rust:#B4552F;
+    --line:#DCD5C4;
+    --white:#FFFDF8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .serif{font-family:'Fraunces', serif;}
+
+  /* ---- App shell ---- */
+  #app{max-width:1180px; margin:0 auto; position:relative;}
+  .page{display:none;}
+  .page.active{display:block; animation:fadein .35s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ---- Header ---- */
+  header{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 28px; border-bottom:1px solid var(--line);
+  }
+  .logo{display:flex; align-items:center; gap:10px; cursor:pointer;}
+  .logo-mark{
+    width:30px; height:30px; border-radius:3px;
+    background:var(--green);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .logo-mark svg{width:16px; height:16px;}
+  .logo-word{font-family:'Fraunces', serif; font-weight:600; font-size:20px; letter-spacing:.01em;}
+  nav{display:flex; align-items:center; gap:34px;}
+  nav .navlinks{display:flex; gap:28px; font-size:14.5px; color:var(--ink-soft);}
+  nav .navlinks span{cursor:pointer; transition:color .15s;}
+  nav .navlinks span:hover{color:var(--ink);}
+  .btn-donate-nav{
+    background:var(--rust); color:var(--white); border:none;
+    padding:10px 20px; border-radius:2px; font-size:14px; font-weight:500;
+    cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:.01em;
+    transition:background .15s;
+  }
+  .btn-donate-nav:hover{background:#9c4527;}
+
+  /* ---- Hero ---- */
+  .hero{
+    padding:88px 28px 64px; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:end;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--rust); margin-bottom:18px; display:block;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif; font-weight:500; font-size:clamp(34px,4.6vw,58px);
+    line-height:1.08; letter-spacing:-.01em;
+  }
+  .hero h1 em{font-style:italic; font-weight:300; color:var(--green);}
+  .hero-side p{font-size:15.5px; line-height:1.65; color:var(--ink-soft); margin-bottom:22px;}
+  .hero-cta{display:flex; gap:12px;}
+  .btn-primary{
+    background:var(--green); color:var(--white); border:none; padding:14px 26px;
+    font-size:14.5px; font-weight:500; cursor:pointer; border-radius:2px; font-family:'Inter',sans-serif;
+    transition:background .15s;
+  }
+  .btn-primary:hover{background:var(--green-deep);}
+  .btn-ghost{
+    background:transparent; color:var(--ink); border:1px solid var(--line); padding:14px 22px;
+    font-size:14.5px; cursor:pointer; border-radius:2px; font-family:'Inter',sans-serif;
+  }
+  .btn-ghost:hover{border-color:var(--ink);}
+
+  /* ---- Ledger strip (signature element) ---- */
+  .ledger{
+    padding:0 28px; border-bottom:1px solid var(--line); background:var(--paper-deep);
+  }
+  .ledger-inner{padding:26px 0; overflow:hidden;}
+  .ledger-label{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--ink-soft); margin-bottom:14px;
+  }
+  .ledger-track{display:flex; gap:0; animation:scroll-left 26s linear infinite;}
+  .ledger:hover .ledger-track{animation-play-state:paused;}
+  @keyframes scroll-left{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+  .ledger-entry{
+    font-family:'IBM Plex Mono', monospace; font-size:13px; white-space:nowrap;
+    padding:0 22px; border-right:1px solid var(--line); color:var(--ink-soft);
+    display:flex; align-items:center; gap:8px;
+  }
+  .ledger-entry .amt{color:var(--green); font-weight:500;}
+  .ledger-entry .dot{width:5px; height:5px; border-radius:50%; background:var(--gold); display:inline-block;}
+
+  /* ---- Impact stats ---- */
+  .section{padding:70px 28px; border-bottom:1px solid var(--line);}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:44px; gap:20px;}
+  .section-head h2{font-family:'Fraunces',serif; font-weight:500; font-size:30px;}
+  .section-head p{color:var(--ink-soft); font-size:14.5px; max-width:340px; line-height:1.6;}
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line);}
+  .stat{background:var(--paper); padding:28px 22px;}
+  .stat .n{font-family:'IBM Plex Mono',monospace; font-size:30px; color:var(--green); font-weight:500;}
+  .stat .l{font-size:13px; color:var(--ink-soft); margin-top:6px;}
+
+  /* ---- Programs ---- */
+  .programs{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .program{border:1px solid var(--line); padding:26px; background:var(--white);}
+  .program .tag{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--rust); text-transform:uppercase; letter-spacing:.06em;}
+  .program h3{font-family:'Fraunces',serif; font-weight:500; font-size:20px; margin:12px 0 10px;}
+  .program p{font-size:14px; color:var(--ink-soft); line-height:1.6;}
+
+  /* ---- CTA band ---- */
+  .cta-band{
+    padding:64px 28px; background:var(--green); color:var(--white);
+    display:flex; justify-content:space-between; align-items:center; gap:24px;
+    border-bottom:1px solid var(--line);
+  }
+  .cta-band h2{font-family:'Fraunces',serif; font-weight:500; font-size:28px; max-width:480px; line-height:1.25;}
+  .cta-band .btn-primary{background:var(--gold); color:var(--ink);}
+  .cta-band .btn-primary:hover{background:#b6893a;}
+
+  footer{padding:36px 28px; display:flex; justify-content:space-between; color:var(--ink-soft); font-size:13px;}
+
+  /* ---- DONATE PAGE ---- */
+  .donate-wrap{padding:56px 28px 100px; display:grid; grid-template-columns:1fr .9fr; gap:56px;}
+  .donate-head span.eyebrow{margin-bottom:10px;}
+  .donate-head h1{font-family:'Fraunces',serif; font-weight:500; font-size:36px; margin-bottom:10px;}
+  .donate-head p{color:var(--ink-soft); font-size:14.5px; max-width:420px; line-height:1.6; margin-bottom:36px;}
+
+  .amounts{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px;}
+  .amt-btn{
+    border:1px solid var(--line); background:var(--white); padding:16px 8px; text-align:center;
+    cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:15px; border-radius:2px;
+    transition:all .15s;
+  }
+  .amt-btn:hover{border-color:var(--green);}
+  .amt-btn.selected{background:var(--green); color:var(--white); border-color:var(--green);}
+  .amt-custom{
+    display:flex; align-items:center; border:1px solid var(--line); background:var(--white);
+    padding:0 14px; margin-bottom:28px; border-radius:2px;
+  }
+  .amt-custom span{font-family:'IBM Plex Mono',monospace; color:var(--ink-soft); font-size:14px;}
+  .amt-custom input{
+    border:none; background:transparent; padding:14px 8px; font-family:'IBM Plex Mono',monospace;
+    font-size:14px; width:100%; outline:none;
+  }
+
+  .freq-toggle{display:flex; border:1px solid var(--line); border-radius:2px; overflow:hidden; margin-bottom:32px; width:fit-content;}
+  .freq-toggle div{padding:10px 20px; font-size:13.5px; cursor:pointer; color:var(--ink-soft);}
+  .freq-toggle div.selected{background:var(--ink); color:var(--white);}
+
+  .method-label{font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:12px;}
+  .methods{display:flex; gap:10px; margin-bottom:28px;}
+  .method-btn{
+    flex:1; border:1px solid var(--line); background:var(--white); padding:16px; border-radius:2px;
+    cursor:pointer; display:flex; align-items:center; gap:10px; transition:all .15s;
+  }
+  .method-btn.selected{border-color:var(--green); background:#eef2ee;}
+  .method-btn .icon{width:26px; height:26px; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; font-family:'IBM Plex Mono',monospace; color:var(--white);}
+  .method-btn.mpesa .icon{background:#00A65A;}
+  .method-btn.paypal .icon{background:#0F3C93;}
+  .method-btn .m-name{font-size:14px; font-weight:500;}
+  .method-btn .m-sub{font-size:11.5px; color:var(--ink-soft);}
+
+  .panel{
+    border:1px solid var(--line); background:var(--white); padding:26px; min-height:230px; position:relative; overflow:hidden;
+  }
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:6px;}
+  .field input{
+    width:100%; border:1px solid var(--line); padding:12px 14px; font-family:'Inter',sans-serif;
+    font-size:14px; border-radius:2px; outline:none;
+  }
+  .field input:focus{border-color:var(--green);}
+
+  .summary{border:1px solid var(--line); background:var(--paper-deep); padding:24px; height:fit-content; position:sticky; top:24px;}
+  .summary h3{font-family:'Fraunces',serif; font-weight:500; font-size:18px; margin-bottom:18px;}
+  .summary-row{display:flex; justify-content:space-between; font-size:13.5px; padding:10px 0; border-bottom:1px dashed var(--line); color:var(--ink-soft);}
+  .summary-row.total{color:var(--ink); font-weight:600; border-bottom:none; padding-top:14px; font-size:15px;}
+  .summary-row .v{font-family:'IBM Plex Mono',monospace;}
+
+  .btn-give{
+    width:100%; background:var(--rust); color:var(--white); border:none; padding:15px;
+    font-size:15px; font-weight:500; cursor:pointer; border-radius:2px; margin-top:18px;
+    font-family:'Inter',sans-serif; transition:background .15s;
+  }
+  .btn-give:hover{background:#9c4527;}
+  .btn-give:disabled{background:#c9c2ac; cursor:not-allowed;}
+
+  /* STK push simulation */
+  .stk-state{display:none; text-align:center; padding:20px 6px;}
+  .stk-state.active{display:block; animation:fadein .3s ease;}
+  .phone-frame{
+    width:150px; height:150px; margin:0 auto 18px; border:2px solid var(--ink); border-radius:16px;
+    display:flex; align-items:center; justify-content:center; position:relative; background:var(--paper);
+  }
+  .pulse-ring{
+    position:absolute; width:60px; height:60px; border-radius:50%; border:2px solid var(--green);
+    animation:pulse 1.5s ease-out infinite;
+  }
+  @keyframes pulse{0%{transform:scale(.6); opacity:1;} 100%{transform:scale(2.2); opacity:0;}}
+  .phone-icon{font-size:26px;}
+  .stk-title{font-family:'Fraunces',serif; font-size:18px; margin-bottom:8px;}
+  .stk-sub{font-size:13.5px; color:var(--ink-soft); margin-bottom:6px;}
+  .stk-pin{
+    display:inline-flex; gap:6px; margin-top:14px;
+  }
+  .stk-pin div{width:9px; height:9px; border-radius:50%; background:var(--line);}
+  .stk-pin div.filled{background:var(--green);}
+
+  .receipt{
+    background:var(--white); border:1px solid var(--line); padding:22px; font-family:'IBM Plex Mono',monospace;
+    font-size:13px; max-width:340px; margin:0 auto; text-align:left; line-height:1.8;
+  }
+  .receipt .r-title{color:#00A65A; font-weight:500; margin-bottom:10px; display:flex; align-items:center; gap:6px;}
+  .receipt hr{border:none; border-top:1px dashed var(--line); margin:10px 0;}
+  .receipt .row{display:flex; justify-content:space-between;}
+
+  .paypal-btn{
+    background:#FFC439; border:none; width:100%; padding:14px; border-radius:24px; cursor:pointer;
+    font-weight:700; font-size:15px; color:#003087; font-family:'Inter',sans-serif;
+    display:flex; align-items:center; justify-content:center; gap:6px;
+  }
+  .paypal-btn:hover{background:#f5ba30;}
+  .paypal-note{font-size:12px; color:var(--ink-soft); text-align:center; margin-top:12px;}
+
+  .success-wrap{text-align:center; padding:10px;}
+  .checkmark{
+    width:52px; height:52px; border-radius:50%; background:#00A65A; color:white; display:flex;
+    align-items:center; justify-content:center; margin:0 auto 16px; font-size:24px;
+  }
+
+  .back-link{font-size:13px; color:var(--ink-soft); cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin-bottom:18px;}
+  .back-link:hover{color:var(--ink);}
+
+  @media(max-width:860px){
+    .hero{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
+    .programs{grid-template-columns:1fr;}
+    .donate-wrap{grid-template-columns:1fr;}
+    nav .navlinks{display:none;}
+    .cta-band{flex-direction:column; align-items:flex-start;}
+    .amounts{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span>Programs</span>
+        <span>Impact</span>
+        <span>About</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+    </nav>
+  </header>
+
+  <!-- ============ HOME PAGE ============ -->
+  <div class="page active" id="page-home">
+
+    <section class="hero">
+      <div>
+        <span class="eyebrow">Community-led · Nairobi &amp; Kajiado County</span>
+        <h1>We fund the <em>last mile</em><br>of clean water,<br>not the launch photo.</h1>
+      </div>
+      <div class="hero-side">
+        <p>Msingi channels local and diaspora giving directly to boreholes, school feeding, and small-scale irrigation run by the communities that use them. Every shilling is logged, and every donor sees where it went.</p>
+        <div class="hero-cta">
+          <button class="btn-primary" onclick="goDonate()">Give now</button>
+          <button class="btn-ghost">Read our model</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="ledger">
+      <div class="ledger-inner">
+        <div class="ledger-label">Recent gifts — public ledger</div>
+        <div class="ledger-track" id="ledger-track"></div>
+      </div>
+    </div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>What your giving has moved</h2>
+        <p>Figures updated monthly and reconciled against M-Pesa and PayPal settlement reports.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="n">14</div><div class="l">boreholes completed since 2022</div></div>
+        <div class="stat"><div class="n">3,180</div><div class="l">households with daily water access</div></div>
+        <div class="stat"><div class="n">92%</div><div class="l">of gifts reach programs within 30 days</div></div>
+        <div class="stat"><div class="n">KSh 41.2M</div><div class="l">total disbursed to date</div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Where a gift can go</h2>
+        <p>Give generally, or direct your donation to one active program.</p>
+      </div>
+      <div class="programs">
+        <div class="program">
+          <div class="tag">Water</div>
+          <h3>Kajiado Borehole Fund</h3>
+          <p>Drilling and solar-pumping for four villages currently trucking water in during dry months.</p>
+        </div>
+        <div class="program">
+          <div class="tag">Nutrition</div>
+          <h3>School Feeding, Ongata</h3>
+          <p>Daily lunch for 640 pupils across three primary schools, sourced from local farmers.</p>
+        </div>
+        <div class="program">
+          <div class="tag">Livelihood</div>
+          <h3>Women's Irrigation Co-op</h3>
+          <p>Drip-irrigation kits for a 40-member farming group, repaid into a community revolving fund.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta-band">
+      <h2>A gift of KSh 500 covers a family's clean water for a month.</h2>
+      <button class="btn-primary" onclick="goDonate()">Donate via M-Pesa or PayPal</button>
+    </div>
+
+    <footer>
+      <div>© 2026 Msingi Community Trust · Registered NGO, Kenya</div>
+      <div>Nairobi, Kenya</div>
+    </footer>
+  </div>
+
+  <!-- ============ DONATE PAGE ============ -->
+  <div class="page" id="page-donate">
+    <div class="donate-wrap">
+      <div>
+        <div class="back-link" onclick="goHome()">← Back to Msingi</div>
+        <div class="donate-head">
+          <span class="eyebrow">Give</span>
+          <h1>Make a gift</h1>
+          <p>Choose an amount, then pay by M-Pesa or PayPal. You'll get a receipt either way — no account needed.</p>
+        </div>
+
+        <div class="method-label">Amount (KSh)</div>
+        <div class="amounts" id="amounts">
+          <div class="amt-btn" data-amt="500">500</div>
+          <div class="amt-btn selected" data-amt="1500">1,500</div>
+          <div class="amt-btn" data-amt="3000">3,000</div>
+          <div class="amt-btn" data-amt="10000">10,000</div>
+        </div>
+        <div class="amt-custom">
+          <span>KSh</span>
+          <input type="number" id="customAmt" placeholder="Enter a custom amount">
+        </div>
+
+        <div class="method-label">Frequency</div>
+        <div class="freq-toggle" id="freq">
+          <div class="selected" data-f="once">Give once</div>
+          <div data-f="monthly">Give monthly</div>
+        </div>
+
+        <div class="method-label">Payment method</div>
+        <div class="methods">
+          <div class="method-btn mpesa selected" data-m="mpesa" onclick="selectMethod('mpesa')">
+            <div class="icon">M</div>
+            <div><div class="m-name">M-Pesa</div><div class="m-sub">STK push to your phone</div></div>
+          </div>
+          <div class="method-btn paypal" data-m="paypal" onclick="selectMethod('paypal')">
+            <div class="icon">P</div>
+            <div><div class="m-name">PayPal</div><div class="m-sub">Card or PayPal balance</div></div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel">
+          <!-- MPESA: entry state -->
+          <div class="stk-state active" id="mpesa-entry">
+            <div class="field">
+              <label>M-Pesa phone number</label>
+              <input type="tel" id="phoneInput" placeholder="07XX XXX XXX" maxlength="13">
+            </div>
+            <button class="btn-give" id="mpesaGiveBtn" onclick="startSTK()">Send request to my phone</button>
+          </div>
+
+          <!-- MPESA: waiting state -->
+          <div class="stk-state" id="mpesa-waiting">
+            <div class="phone-frame"><div class="pulse-ring"></div><div class="phone-icon">📱</div></div>
+            <div class="stk-title">Check your phone</div>
+            <div class="stk-sub">We sent an STK push to <span id="waitPhone" class="mono"></span></div>
+            <div class="stk-sub">Enter your M-Pesa PIN to confirm</div>
+            <div class="stk-pin" id="pinDots">
+              <div></div><div></div><div></div><div></div>
+            </div>
+          </div>
+
+          <!-- MPESA: confirmed -->
+          <div class="stk-state" id="mpesa-done">
+            <div class="receipt">
+              <div class="r-title">✓ Confirmed</div>
+              <div class="row"><span>Ref</span><span id="rcMpesaRef">QF7K2LX9P1</span></div>
+              <div class="row"><span>Amount</span><span id="rcMpesaAmt">Ksh1,500.00</span></div>
+              <div class="row"><span>To</span><span>MSINGI TRUST</span></div>
+              <hr>
+              <div class="row"><span>New M-Pesa balance</span><span>Ksh8,214.50</span></div>
+            </div>
+            <div style="text-align:center; margin-top:18px;">
+              <div style="font-size:13.5px; color:var(--ink-soft); margin-bottom:14px;">Asante sana — your gift is on its way to Kajiado.</div>
+              <button class="btn-ghost" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+
+          <!-- PAYPAL: entry state -->
+          <div class="stk-state" id="paypal-entry">
+            <div style="padding:8px 0 18px; font-size:13.5px; color:var(--ink-soft);">You'll be securely redirected to PayPal to complete this gift, then returned here.</div>
+            <button class="paypal-btn" onclick="startPaypal()">Pay<span style="color:#0070E0; margin-left:4px;">Pal</span></button>
+            <div class="paypal-note">Powered by PayPal · Msingi never sees your card details</div>
+          </div>
+
+          <!-- PAYPAL: processing -->
+          <div class="stk-state" id="paypal-waiting">
+            <div class="phone-frame" style="border-color:#0F3C93;"><div class="pulse-ring" style="border-color:#0F3C93;"></div><div class="phone-icon">🔒</div></div>
+            <div class="stk-title">Confirming with PayPal…</div>
+            <div class="stk-sub">Please don't close this window</div>
+          </div>
+
+          <!-- PAYPAL: done -->
+          <div class="stk-state" id="paypal-done">
+            <div class="success-wrap">
+              <div class="checkmark">✓</div>
+              <div class="stk-title">Payment received</div>
+              <div class="stk-sub">A receipt was sent to your PayPal email</div>
+              <button class="btn-ghost" style="margin-top:16px;" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="summary">
+        <h3>Your gift</h3>
+        <div class="summary-row"><span>Amount</span><span class="v" id="sumAmt">KSh 1,500</span></div>
+        <div class="summary-row"><span>Frequency</span><span class="v" id="sumFreq">One-time</span></div>
+        <div class="summary-row"><span>Method</span><span class="v" id="sumMethod">M-Pesa</span></div>
+        <div class="summary-row"><span>Processing fee</span><span class="v">Covered by Msingi</span></div>
+        <div class="summary-row total"><span>Total charged</span><span class="v" id="sumTotal">KSh 1,500</span></div>
+        <button class="btn-give" id="mainGiveBtn" style="display:none;">Give KSh 1,500</button>
+        <div style="font-size:11.5px; color:var(--ink-soft); margin-top:14px; line-height:1.5;">Msingi Community Trust is a registered NGO. You'll receive an emailed receipt for tax purposes.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ---- Nav ----
+  function goHome(){
+    document.getElementById('page-home').classList.add('active');
+    document.getElementById('page-donate').classList.remove('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function goDonate(){
+    document.getElementById('page-home').classList.remove('active');
+    document.getElementById('page-donate').classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    resetDonate();
+  }
+
+  // ---- Ledger ticker ----
+  const names = ["J. Wanjiru","Diaspora — London","A. Otieno","M-Pesa Anonymous","S. Achieng","Kilimo SACCO","P. Mwangi","Anonymous","D. Njoroge","C. Wambui"];
+  const entries = [];
+  for(let i=0;i<16;i++){
+    const amt = [200,500,1000,1500,2500,5000][Math.floor(Math.random()*6)];
+    const n = names[Math.floor(Math.random()*names.length)];
+    entries.push(`<div class="ledger-entry"><span class="dot"></span>${n} <span class="amt">Ksh${amt.toLocaleString()}</span></div>`);
+  }
+  document.getElementById('ledger-track').innerHTML = entries.join('') + entries.join('');
+
+  // ---- Donate state ----
+  let state = { amount: 1500, freq: 'once', method: 'mpesa' };
+
+  document.querySelectorAll('.amt-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      document.querySelectorAll('.amt-btn').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      document.getElementById('customAmt').value = '';
+      state.amount = parseInt(btn.dataset.amt);
+      updateSummary();
+    });
+  });
+  document.getElementById('customAmt').addEventListener('input', (e)=>{
+    if(e.target.value){
+      document.querySelectorAll('.amt-btn').forEach(b=>b.classList.remove('selected'));
+      state.amount = parseInt(e.target.value)||0;
+      updateSummary();
+    }
+  });
+  document.querySelectorAll('#freq div').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      document.querySelectorAll('#freq div').forEach(d=>d.classList.remove('selected'));
+      el.classList.add('selected');
+      state.freq = el.dataset.f;
+      updateSummary();
+    });
+  });
+
+  function selectMethod(m){
+    state.method = m;
+    document.querySelectorAll('.method-btn').forEach(b=>b.classList.remove('selected'));
+    document.querySelector(`.method-btn.${m}`).classList.add('selected');
+    document.querySelectorAll('.stk-state').forEach(s=>s.classList.remove('active'));
+    document.getElementById(m+'-entry').classList.add('active');
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const amt = state.amount || 0;
+    document.getElementById('sumAmt').textContent = 'KSh ' + amt.toLocaleString();
+    document.getElementById('sumFreq').textContent = state.freq === 'once' ? 'One-time' : 'Monthly, cancel anytime';
+    document.getElementById('sumMethod').textContent = state.method === 'mpesa' ? 'M-Pesa' : 'PayPal';
+    document.getElementById('sumTotal').textContent = 'KSh ' + amt.toLocaleString() + (state.freq==='monthly' ? ' / mo' : '');
+  }
+  updateSummary();
+
+  // ---- Phone formatting ----
+  document.getElementById('phoneInput').addEventListener('input', (e)=>{
+    let v = e.target.value.replace(/\D/g,'').slice(0,10);
+    let out = v;
+    if(v.length > 3) out = v.slice(0,3)+' '+v.slice(3);
+    if(v.length > 6) out = v.slice(0,3)+' '+v.slice(3,6)+' '+v.slice(6);
+    e.target.value = out;
+  });
+
+  // ---- M-Pesa STK simulation ----
+  function startSTK(){
+    const phone = document.getElementById('phoneInput').value;
+    if(!phone || phone.replace(/\D/g,'').length < 9){
+      document.getElementById('phoneInput').style.borderColor = '#B4552F';
+      return;
+    }
+    document.getElementById('waitPhone').textContent = '07' + phone.replace(/\D/g,'').slice(1);
+    swapState('mpesa-entry','mpesa-waiting');
+
+    // animate pin dots filling
+    const dots = document.querySelectorAll('#pinDots div');
+    dots.forEach(d=>d.classList.remove('filled'));
+    let i=0;
+    const pinTimer = setInterval(()=>{
+      if(i < dots.length){ dots[i].classList.add('filled'); i++; }
+      else clearInterval(pinTimer);
+    }, 480);
+
+    setTimeout(()=>{
+      const ref = 'S' + Math.random().toString(36).substring(2,7).toUpperCase() + Math.floor(Math.random()*99);
+      document.getElementById('rcMpesaRef').textContent = ref;
+      document.getElementById('rcMpesaAmt').textContent = 'Ksh' + (state.amount||0).toLocaleString() + '.00';
+      swapState('mpesa-waiting','mpesa-done');
+    }, 2600);
+  }
+
+  function startPaypal(){
+    swapState('paypal-entry','paypal-waiting');
+    setTimeout(()=>{
+      swapState('paypal-waiting','paypal-done');
+    }, 2000);
+  }
+
+  function swapState(fromId, toId){
+    document.getElementById(fromId).classList.remove('active');
+    document.getElementById(toId).classList.add('active');
+  }
+
+  function resetDonate(){
+    document.querySelectorAll('.stk-state').forEach(s=>s.classList.remove('active'));
+    document.getElementById(state.method+'-entry').classList.add('active');
+    document.getElementById('phoneInput').value='';
+    document.getElementById('phoneInput').style.borderColor = 'var(--line)';
+  }
+</script>
+</body>
+</html>
