@@ -80,6 +80,31 @@
   .btn-donate-nav:hover{background:var(--rust-deep); transform:translateY(-1px);}
   @keyframes softpulse{0%,100%{box-shadow:0 0 0 0 rgba(180,85,47,.25);} 50%{box-shadow:0 0 0 6px rgba(180,85,47,0);}}
 
+  /* ---- Mobile hamburger + nav overlay ---- */
+  .hamburger{
+    display:none; flex-direction:column; gap:4px; background:none; border:none; cursor:pointer;
+    padding:8px; margin-left:6px;
+  }
+  .hamburger span{width:20px; height:2px; background:var(--ink); border-radius:2px; transition:transform .2s, opacity .2s;}
+  .hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .hamburger.open span:nth-child(2){opacity:0;}
+  .hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+  .mobile-nav{
+    display:none; position:fixed; top:73px; left:0; right:0; bottom:0; background:var(--paper);
+    z-index:49; padding:8px 28px 28px; overflow-y:auto;
+    transform:translateY(-8px); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+  }
+  .mobile-nav.open{opacity:1; transform:translateY(0); pointer-events:auto;}
+  .mobile-nav span{
+    display:block; padding:18px 4px; font-family:'Fraunces',serif; font-size:22px; font-weight:500;
+    border-bottom:1px solid var(--line); cursor:pointer;
+  }
+  .mobile-nav .mn-donate{
+    display:block; margin-top:24px; text-align:center; background:var(--rust); color:var(--white);
+    padding:15px; border-radius:2px; font-family:'Inter',sans-serif; font-size:15px; font-weight:500;
+    border-bottom:none; cursor:pointer;
+  }
+
   /* ---- Hero ---- */
   .hero{
     padding:88px 28px 64px; display:grid; grid-template-columns:1.15fr .85fr; gap:56px; align-items:end;
@@ -437,15 +462,34 @@
     .programs{grid-template-columns:1fr;}
     .donate-wrap{grid-template-columns:1fr;}
     nav .navlinks{display:none;}
+    .hamburger{display:flex;}
+    .mobile-nav{display:block; top:65px;}
+    header{padding:18px 20px;}
     .cta-band{flex-direction:column; align-items:flex-start;}
     .amounts{grid-template-columns:repeat(2,1fr);}
-    .detail-block, .detail-block.reverse{grid-template-columns:1fr;}
+    .detail-block, .detail-block.reverse{grid-template-columns:1fr; padding:48px 20px; gap:28px;}
     .detail-block.reverse .detail-media, .detail-block.reverse .detail-info{order:initial;}
     .value-grid{grid-template-columns:1fr;}
     .team-grid{grid-template-columns:repeat(2,1fr);}
     .legal-block{grid-template-columns:1fr;}
-    .contact-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr; padding:40px 20px 70px; gap:32px;}
     .split-donut{flex-direction:column; align-items:flex-start;}
+    .section, .subhero, .hero, .ledger, .donate-wrap{padding-left:20px; padding-right:20px;}
+    .summary{position:static; margin-top:8px;}
+    .compare-table{display:block; overflow-x:auto; white-space:nowrap;}
+    .bar-chart{gap:10px; padding:16px 4px 0;}
+    .bar-value{font-size:11px;}
+    .bar-year{font-size:11px;}
+    .breakdown-row .b-label{width:82px; font-size:11.5px;}
+    .photo-grid{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:480px){
+    .hero h1{font-size:28px;}
+    .team-grid{grid-template-columns:1fr 1fr;}
+    .stats{grid-template-columns:1fr 1fr;}
+    .amounts{grid-template-columns:1fr 1fr;}
+    .program-chips{gap:6px;}
+    .chip{padding:8px 11px; font-size:12px;}
   }
 </style>
 </head>
@@ -468,8 +512,20 @@
         <span onclick="showPage('page-contact')">Contact</span>
       </div>
       <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
 
   <!-- ============ HOME PAGE ============ -->
   <div class="page active" id="page-home">
@@ -1202,6 +1258,17 @@
   function scrollToSection(id){
     const el = document.getElementById(id);
     if(el) el.scrollIntoView({behavior:'smooth'});
+  }
+  function toggleMobileNav(){
+    document.getElementById('mobileNav').classList.toggle('open');
+    document.getElementById('hamburgerBtn').classList.toggle('open');
+  }
+  function mobileGo(target){
+    document.getElementById('mobileNav').classList.remove('open');
+    document.getElementById('hamburgerBtn').classList.remove('open');
+    if(target === 'goHome') goHome();
+    else if(target === 'goDonate') goDonate();
+    else showPage(target);
   }
 
   // ---- Ledger ticker (themed) ----
