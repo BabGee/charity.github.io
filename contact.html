@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Msingi Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span onclick="showPage('page-programs')">Programs</span>
+        <span onclick="showPage('page-impact')">Impact</span>
+        <span onclick="showPage('page-about')">About</span>
+        <span onclick="showPage('page-contact')">Contact</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
+
+  <div class="page" id="page-contact">
+
+    <section class="subhero">
+      <span class="eyebrow">Contact</span>
+      <h1>Get in touch.</h1>
+      <p>Questions about a donation, a program, or a partnership — a real person on our team reads every message within two working days.</p>
+    </section>
+
+    <div class="contact-grid">
+      <div>
+        <div id="contactForm">
+          <div class="form-field">
+            <label>Your name</label>
+            <input type="text" id="cName" placeholder="Jane Wambui">
+          </div>
+          <div class="form-field">
+            <label>Email address</label>
+            <input type="email" id="cEmail" placeholder="jane@email.com">
+          </div>
+          <div class="form-field">
+            <label>What's this about?</label>
+            <select id="cSubject">
+              <option>General enquiry</option>
+              <option>Donation support — M-Pesa or PayPal</option>
+              <option>Partnership or corporate giving</option>
+              <option>Volunteering</option>
+              <option>Press &amp; media</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea id="cMessage" placeholder="Tell us a bit more…"></textarea>
+          </div>
+          <button class="btn-primary" style="width:100%; padding:15px;" onclick="submitContact()">Send message</button>
+        </div>
+        <div class="contact-success" id="contactSuccess">
+          <div class="checkmark">✓</div>
+          <div class="stk-title">Message sent</div>
+          <div class="stk-sub">Thanks, <span id="ccName">there</span> — we'll reply to <span id="ccEmail" class="mono"></span> within two working days.</div>
+          <button class="btn-ghost" style="margin-top:18px;" onclick="resetContact()">Send another message</button>
+        </div>
+      </div>
+
+      <div class="contact-info-card">
+        <div class="info-row">
+          <div class="i-label">Office</div>
+          <div class="i-val">Kajiado Road, Ongata Rongai, Kajiado County, Kenya</div>
+        </div>
+        <div class="info-row">
+          <div class="i-label">Phone / WhatsApp</div>
+          <div class="i-val mono">+254 7XX XXX XXX</div>
+        </div>
+        <div class="info-row">
+          <div class="i-label">Email</div>
+          <div class="i-val mono">hello@msingi.org</div>
+        </div>
+        <div class="info-row">
+          <div class="i-label">Office hours</div>
+          <div class="i-val">Mon–Fri, 8:00–17:00 EAT</div>
+        </div>
+        <div class="social-row">
+          <a href="#" title="X / Twitter">𝕏</a>
+          <a href="#" title="Instagram">◎</a>
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div>© 2026 Msingi Community Trust · Registered NGO, Kenya</div>
+      <div>Nairobi, Kenya</div>
+    </footer>
+  </div>
+
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

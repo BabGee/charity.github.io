@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donate — Msingi Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span onclick="showPage('page-programs')">Programs</span>
+        <span onclick="showPage('page-impact')">Impact</span>
+        <span onclick="showPage('page-about')">About</span>
+        <span onclick="showPage('page-contact')">Contact</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
+
+  <div class="page" id="page-donate">
+    <div class="donate-wrap">
+      <div>
+        <div class="back-link" onclick="goHome()">← Back to Msingi</div>
+        <div class="donate-head">
+          <span class="eyebrow">Give</span>
+          <h1>Make a gift</h1>
+          <p>Choose a program and amount, then pay by M-Pesa, PayPal, Apple Pay, or Google Pay. You'll get a receipt either way — no account needed.</p>
+        </div>
+
+        <div class="method-label">Direct my gift to</div>
+        <div class="program-chips" id="programChips">
+          <div class="chip selected" data-p="general"><span class="dot" style="background:var(--ink-soft)"></span>General Fund</div>
+          <div class="chip" data-p="stationery"><span class="dot" style="background:var(--gold)"></span>Stationery &amp; Uniforms</div>
+          <div class="chip" data-p="nutrition"><span class="dot" style="background:var(--green)"></span>Widows' Nutrition</div>
+          <div class="chip" data-p="boychild"><span class="dot" style="background:var(--rust)"></span>Boychild Recovery</div>
+        </div>
+
+        <div class="method-label">Amount (USD)</div>
+        <div class="amounts" id="amounts">
+          <div class="amt-btn" data-amt="5">5</div>
+          <div class="amt-btn selected" data-amt="15">15</div>
+          <div class="amt-btn" data-amt="30">30</div>
+          <div class="amt-btn" data-amt="100">100</div>
+        </div>
+        <div class="amt-custom">
+          <span>$</span>
+          <input type="number" id="customAmt" placeholder="Enter a custom amount (USD)">
+        </div>
+
+        <div class="method-label">Frequency</div>
+        <div class="freq-toggle" id="freq">
+          <div class="selected" data-f="once">Give once</div>
+          <div data-f="monthly">Give monthly</div>
+        </div>
+
+        <div class="method-label">Payment method</div>
+        <div class="methods">
+          <div class="method-btn mpesa selected" data-m="mpesa" onclick="selectMethod('mpesa')">
+            <div class="icon">M</div>
+            <div><div class="m-name">M-Pesa</div><div class="m-sub">STK push to your phone</div></div>
+          </div>
+          <div class="method-btn paypal" data-m="paypal" onclick="selectMethod('paypal')">
+            <div class="icon">P</div>
+            <div><div class="m-name">PayPal</div><div class="m-sub">Card or PayPal balance</div></div>
+          </div>
+          <div class="method-btn apple" data-m="apple" onclick="selectMethod('apple')">
+            <div class="icon">A</div>
+            <div><div class="m-name">Apple Pay</div><div class="m-sub">Face ID or Touch ID</div></div>
+          </div>
+          <div class="method-btn google" data-m="google" onclick="selectMethod('google')">
+            <div class="icon">G</div>
+            <div><div class="m-name">Google Pay</div><div class="m-sub">Card on your Google account</div></div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel">
+          <div class="stk-state active" id="mpesa-entry">
+            <div class="field">
+              <label>M-Pesa phone number</label>
+              <input type="tel" id="phoneInput" placeholder="07XX XXX XXX" maxlength="13">
+            </div>
+            <div class="paypal-note" id="mpesaConversionNote" style="text-align:left; margin:0 0 14px;">M-Pesa settles in Kenyan Shillings — you'll be charged the KSh equivalent of your gift at today's rate.</div>
+            <button class="btn-give" id="mpesaGiveBtn" onclick="startSTK()">Send request to my phone</button>
+          </div>
+
+          <div class="stk-state" id="mpesa-waiting">
+            <div class="phone-frame"><div class="pulse-ring"></div><div class="phone-icon">📱</div></div>
+            <div class="stk-title">Check your phone</div>
+            <div class="stk-sub">We sent an STK push to <span id="waitPhone" class="mono"></span></div>
+            <div class="stk-sub">Enter your M-Pesa PIN to confirm</div>
+            <div class="stk-pin" id="pinDots"><div></div><div></div><div></div><div></div></div>
+          </div>
+
+          <div class="stk-state" id="mpesa-done">
+            <div class="receipt">
+              <div class="r-title">✓ Confirmed</div>
+              <div class="row"><span>Ref</span><span id="rcMpesaRef">QF7K2LX9P1</span></div>
+              <div class="row"><span>Amount</span><span id="rcMpesaAmt">Ksh1,935.00 (≈$15.00)</span></div>
+              <div class="row"><span>Program</span><span id="rcMpesaProgram">General Fund</span></div>
+              <div class="row"><span>To</span><span>MSINGI TRUST</span></div>
+              <hr>
+              <div class="row"><span>New M-Pesa balance</span><span>Ksh8,214.50</span></div>
+            </div>
+            <div style="text-align:center; margin-top:18px;">
+              <div style="font-size:13.5px; color:var(--ink-soft); margin-bottom:14px;">Asante sana — your gift is on its way.</div>
+              <button class="btn-ghost" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+
+          <div class="stk-state" id="paypal-entry">
+            <div style="padding:8px 0 18px; font-size:13.5px; color:var(--ink-soft);">You'll be securely redirected to PayPal to complete this gift, then returned here.</div>
+            <button class="paypal-btn" onclick="startPaypal()">Pay<span style="color:#0070E0; margin-left:4px;">Pal</span></button>
+            <div class="paypal-note">Powered by PayPal · Msingi never sees your card details</div>
+          </div>
+
+          <div class="stk-state" id="paypal-waiting">
+            <div class="phone-frame" style="border-color:#0F3C93;"><div class="pulse-ring" style="border-color:#0F3C93;"></div><div class="phone-icon">🔒</div></div>
+            <div class="stk-title">Confirming with PayPal…</div>
+            <div class="stk-sub">Please don't close this window</div>
+          </div>
+
+          <div class="stk-state" id="paypal-done">
+            <div class="success-wrap">
+              <div class="checkmark">✓</div>
+              <div class="stk-title">Payment received</div>
+              <div class="stk-sub">A receipt was sent to your PayPal email</div>
+              <button class="btn-ghost" style="margin-top:16px;" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+
+          <div class="stk-state" id="apple-entry">
+            <div style="padding:8px 0 18px; font-size:13.5px; color:var(--ink-soft);">Confirm this gift with the card saved in your Apple Wallet.</div>
+            <button class="apple-btn" onclick="startApple()">🍎 Pay</button>
+            <div class="paypal-note">Apple Pay · Msingi never sees your card number</div>
+          </div>
+
+          <div class="stk-state" id="apple-waiting">
+            <div class="phone-frame" style="border-color:#000;"><div class="pulse-ring" style="border-color:#000;"></div><div class="phone-icon">🆔</div></div>
+            <div class="stk-title">Confirm with Face ID</div>
+            <div class="stk-sub">Authenticating your device…</div>
+          </div>
+
+          <div class="stk-state" id="apple-done">
+            <div class="success-wrap">
+              <div class="checkmark">✓</div>
+              <div class="stk-title">Payment authorized</div>
+              <div class="stk-sub">A receipt was sent to your Apple ID email</div>
+              <button class="btn-ghost" style="margin-top:16px;" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+
+          <div class="stk-state" id="google-entry">
+            <div style="padding:8px 0 18px; font-size:13.5px; color:var(--ink-soft);">Confirm this gift with the card saved to your Google account.</div>
+            <button class="google-btn" onclick="startGoogle()"><span class="g-logo">G</span>Pay</button>
+            <div class="paypal-note">Google Pay · Msingi never sees your card number</div>
+          </div>
+
+          <div class="stk-state" id="google-waiting">
+            <div class="phone-frame" style="border-color:#4285F4;"><div class="pulse-ring" style="border-color:#4285F4;"></div><div class="phone-icon">🔐</div></div>
+            <div class="stk-title">Confirming with Google Pay…</div>
+            <div class="stk-sub">Please don't close this window</div>
+          </div>
+
+          <div class="stk-state" id="google-done">
+            <div class="success-wrap">
+              <div class="checkmark">✓</div>
+              <div class="stk-title">Payment received</div>
+              <div class="stk-sub">A receipt was sent to your Google account email</div>
+              <button class="btn-ghost" style="margin-top:16px;" onclick="resetDonate()">Make another gift</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary">
+        <h3>Your gift</h3>
+        <div class="summary-row"><span>Program</span><span class="v" id="sumProgram">General Fund</span></div>
+        <div class="summary-row"><span>Amount</span><span class="v" id="sumAmt">$15</span></div>
+        <div class="summary-row"><span>Frequency</span><span class="v" id="sumFreq">One-time</span></div>
+        <div class="summary-row"><span>Method</span><span class="v" id="sumMethod">M-Pesa</span></div>
+        <div class="summary-row"><span>Processing fee</span><span class="v">Covered by Msingi</span></div>
+        <div class="summary-row total"><span>Total charged</span><span class="v" id="sumTotal">$15</span></div>
+        <div style="font-size:11.5px; color:var(--ink-soft); margin-top:14px; line-height:1.5;">Msingi Community Trust is a registered NGO. You'll receive an emailed receipt for tax purposes.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

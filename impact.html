@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Impact — Msingi Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span onclick="showPage('page-programs')">Programs</span>
+        <span onclick="showPage('page-impact')">Impact</span>
+        <span onclick="showPage('page-about')">About</span>
+        <span onclick="showPage('page-contact')">Contact</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
+
+  <div class="page" id="page-impact">
+
+    <section class="subhero">
+      <span class="eyebrow">Impact</span>
+      <h1>The receipts.</h1>
+      <p>We'd rather show you numbers that are a little unglamorous but real, than a single dramatic statistic that doesn't survive an audit. Everything below is reconciled monthly against M-Pesa and PayPal settlement reports.</p>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Total disbursed, by year</h2>
+        <p>Cumulative giving across all three programs since founding.</p>
+      </div>
+      <div class="bar-chart">
+        <div class="bar-col"><div class="bar-value">$0.4M</div><div class="bar-fill" data-height="10%"></div><div class="bar-year">2022</div></div>
+        <div class="bar-col"><div class="bar-value">$1.1M</div><div class="bar-fill" data-height="28%"></div><div class="bar-year">2023</div></div>
+        <div class="bar-col"><div class="bar-value">$2.0M</div><div class="bar-fill" data-height="50%"></div><div class="bar-year">2024</div></div>
+        <div class="bar-col"><div class="bar-value">$3.1M</div><div class="bar-fill" data-height="78%"></div><div class="bar-year">2025</div></div>
+        <div class="bar-col"><div class="bar-value">$4.0M</div><div class="bar-fill" style="background:var(--rust);" data-height="100%"></div><div class="bar-year">2026</div></div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Where the $4M went</h2>
+        <p>Split across programs and core operations.</p>
+      </div>
+      <div class="split-donut">
+        <div style="flex:1; min-width:240px;">
+          <div class="breakdown">
+            <div class="breakdown-row"><div class="b-label">Stationery</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--gold);" data-width="34%"></div></div><div class="b-pct">34%</div></div>
+            <div class="breakdown-row"><div class="b-label">Nutrition</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--green);" data-width="31%"></div></div><div class="b-pct">31%</div></div>
+            <div class="breakdown-row"><div class="b-label">Boychild</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--rust);" data-width="24%"></div></div><div class="b-pct">24%</div></div>
+            <div class="breakdown-row"><div class="b-label">Operations</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--ink-soft);" data-width="11%"></div></div><div class="b-pct">11%</div></div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div class="leg-row"><span class="sw" style="background:var(--gold);"></span>Stationery &amp; Uniforms — $1.36M</div>
+          <div class="leg-row"><span class="sw" style="background:var(--green);"></span>Widows' Nutrition — $1.24M</div>
+          <div class="leg-row"><span class="sw" style="background:var(--rust);"></span>Boychild Recovery — $0.96M</div>
+          <div class="leg-row"><span class="sw" style="background:var(--ink-soft);"></span>Core operations — $0.44M</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Where we work</h2>
+        <p>Beneficiaries by sub-county, current term.</p>
+      </div>
+      <table class="loc-table">
+        <tr><td>Kajiado Central</td><td class="num">1,240 people</td></tr>
+        <tr><td>Ongata Rongai</td><td class="num">980 people</td></tr>
+        <tr><td>Kitengela</td><td class="num">760 people</td></tr>
+        <tr><td>Namanga</td><td class="num">410 people</td></tr>
+        <tr><td>Isinya</td><td class="num">360 people</td></tr>
+      </table>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Audited reports</h2>
+        <p>Prepared annually by an independent auditor before publication.</p>
+      </div>
+      <div class="report-row">
+        <div><div class="r-name">Annual Report &amp; Financials — 2025</div><div class="r-meta">Audited by Kariuki &amp; Associates · Published March 2026</div></div>
+        <div class="report-dl">Download PDF ↓</div>
+      </div>
+      <div class="report-row">
+        <div><div class="r-name">Annual Report &amp; Financials — 2024</div><div class="r-meta">Audited by Kariuki &amp; Associates · Published March 2025</div></div>
+        <div class="report-dl">Download PDF ↓</div>
+      </div>
+      <div class="report-row">
+        <div><div class="r-name">Annual Report &amp; Financials — 2023</div><div class="r-meta">Audited by Kariuki &amp; Associates · Published March 2024</div></div>
+        <div class="report-dl">Download PDF ↓</div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Moments from this term</h2>
+        <p>Add your own field photos below.</p>
+      </div>
+      <div class="photo-grid">
+        <div class="photo-cell" id="imedia-0"><div class="placeholder-art" id="iart-0"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-0">⤒</label><input type="file" id="ifile-0" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-0','iart-0',this)"></div>
+        <div class="photo-cell" id="imedia-1"><div class="placeholder-art" id="iart-1"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-1">⤒</label><input type="file" id="ifile-1" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-1','iart-1',this)"></div>
+        <div class="photo-cell" id="imedia-2"><div class="placeholder-art" id="iart-2"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-2">⤒</label><input type="file" id="ifile-2" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-2','iart-2',this)"></div>
+        <div class="photo-cell" id="imedia-3"><div class="placeholder-art" id="iart-3"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-3">⤒</label><input type="file" id="ifile-3" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-3','iart-3',this)"></div>
+        <div class="photo-cell" id="imedia-4"><div class="placeholder-art" id="iart-4"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-4">⤒</label><input type="file" id="ifile-4" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-4','iart-4',this)"></div>
+        <div class="photo-cell" id="imedia-5"><div class="placeholder-art" id="iart-5"><svg viewBox="0 0 96 96" fill="none"><rect x="20" y="24" width="56" height="48" rx="3" stroke="#54503f" stroke-width="3"/><circle cx="34" cy="40" r="5" stroke="#54503f" stroke-width="3"/><path d="M20 62l16-14 14 10 12-10 14 12" stroke="#54503f" stroke-width="3" stroke-linejoin="round"/></svg></div><label class="upload-btn" for="ifile-5">⤒</label><input type="file" id="ifile-5" class="file-input" accept="image/*" onchange="handleGridUpload('imedia-5','iart-5',this)"></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© 2026 Msingi Community Trust · Registered NGO, Kenya</div>
+      <div>Nairobi, Kenya</div>
+    </footer>
+  </div>
+
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

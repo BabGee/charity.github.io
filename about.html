@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Msingi Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span onclick="showPage('page-programs')">Programs</span>
+        <span onclick="showPage('page-impact')">Impact</span>
+        <span onclick="showPage('page-about')">About</span>
+        <span onclick="showPage('page-contact')">Contact</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
+
+  <div class="page" id="page-about">
+
+    <section class="subhero">
+      <span class="eyebrow">About</span>
+      <h1>Why Msingi exists.</h1>
+      <p>Msingi started in 2021 when three teachers in Kajiado County pooled their own salaries to buy uniforms for children being sent home for lacking them. What began as an informal fund is now a registered trust — still run by people who grew up in the communities it serves.</p>
+    </section>
+
+    <section class="section reveal stagger">
+      <div class="section-head">
+        <h2>What we believe</h2>
+        <p>Three commitments that shape every program decision.</p>
+      </div>
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="v-num">01</div>
+          <h3>Transparency by default</h3>
+          <p>Every gift is logged the day it lands. Our public ledger and annual audits exist so no one has to take our word for it.</p>
+        </div>
+        <div class="value-card">
+          <div class="v-num">02</div>
+          <h3>Dignity over spectacle</h3>
+          <p>We don't photograph people at their lowest moment for a campaign. Stories are shared with consent, and often in the recipient's own words.</p>
+        </div>
+        <div class="value-card">
+          <div class="v-num">03</div>
+          <h3>Local-first delivery</h3>
+          <p>Field officers, elders, and mentors are drawn from the communities we work in — they're neighbours first, staff second.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>How we got here</h2>
+        <p>Five years, three programs.</p>
+      </div>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-year">2021</div>
+          <h4>An informal fund among teachers</h4>
+          <p>Three primary school teachers in Kajiado begin quietly covering uniform costs for pupils being turned away.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-year">2022</div>
+          <h4>Registered as a trust; Widows' Nutrition launches</h4>
+          <p>Msingi Community Trust is formally registered. The first monthly food baskets reach 60 widows in Kajiado Central.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-year">2023</div>
+          <h4>School Essentials Fund formalised</h4>
+          <p>The uniform fund becomes a standing program with its own budget line, reaching over 1,200 children in its first year.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-year">2024</div>
+          <h4>Boychild Recovery &amp; Mentorship begins</h4>
+          <p>In response to requests from mothers in the Widows' Nutrition program, Msingi launches counselling and mentorship support for young men.</p>
+        </div>
+        <div class="t-item">
+          <div class="t-year">2026</div>
+          <h4>$4M disbursed, three programs strong</h4>
+          <p>Msingi now supports 3,180 children, 540 widows, and 30 young men in recovery — with M-Pesa and PayPal giving open to anyone, anywhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal stagger">
+      <div class="section-head">
+        <h2>The team on the ground</h2>
+        <p>Add your own team photos below.</p>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo" id="tmedia-0"><div class="placeholder-art" id="tart-0"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="38" r="16" stroke="#54503f" stroke-width="3"/><path d="M20 78c0-16 12-26 28-26s28 10 28 26" stroke="#54503f" stroke-width="3"/></svg></div><label class="upload-btn" for="tfile-0">⤒</label><input type="file" id="tfile-0" class="file-input" accept="image/*" onchange="handleGridUpload('tmedia-0','tart-0',this)"></div>
+          <div class="team-name">Naomi Wanjala</div>
+          <div class="team-role">Executive Director</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo" id="tmedia-1"><div class="placeholder-art" id="tart-1"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="38" r="16" stroke="#54503f" stroke-width="3"/><path d="M20 78c0-16 12-26 28-26s28 10 28 26" stroke="#54503f" stroke-width="3"/></svg></div><label class="upload-btn" for="tfile-1">⤒</label><input type="file" id="tfile-1" class="file-input" accept="image/*" onchange="handleGridUpload('tmedia-1','tart-1',this)"></div>
+          <div class="team-name">Brian Ochieng</div>
+          <div class="team-role">Programs Lead</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo" id="tmedia-2"><div class="placeholder-art" id="tart-2"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="38" r="16" stroke="#54503f" stroke-width="3"/><path d="M20 78c0-16 12-26 28-26s28 10 28 26" stroke="#54503f" stroke-width="3"/></svg></div><label class="upload-btn" for="tfile-2">⤒</label><input type="file" id="tfile-2" class="file-input" accept="image/*" onchange="handleGridUpload('tmedia-2','tart-2',this)"></div>
+          <div class="team-name">Grace Nduta</div>
+          <div class="team-role">Finance &amp; Transparency Lead</div>
+        </div>
+        <div class="team-card">
+          <div class="team-photo" id="tmedia-3"><div class="placeholder-art" id="tart-3"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="38" r="16" stroke="#54503f" stroke-width="3"/><path d="M20 78c0-16 12-26 28-26s28 10 28 26" stroke="#54503f" stroke-width="3"/></svg></div><label class="upload-btn" for="tfile-3">⤒</label><input type="file" id="tfile-3" class="file-input" accept="image/*" onchange="handleGridUpload('tmedia-3','tart-3',this)"></div>
+          <div class="team-name">Samuel Leparan</div>
+          <div class="team-role">Community Liaison, Kajiado</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Legal &amp; oversight</h2>
+        <p>The paperwork that lets you verify us independently.</p>
+      </div>
+      <div class="legal-block">
+        <div><div class="lg-label">Registration</div><div class="lg-val">NGO/CERT/2022 - 0417, Kenya</div></div>
+        <div><div class="lg-label">Board oversight</div><div class="lg-val">5-member independent board, meets quarterly</div></div>
+        <div><div class="lg-label">Auditor</div><div class="lg-val">Kariuki &amp; Associates, Nairobi</div></div>
+      </div>
+    </section>
+
+    <div class="cta-band reveal">
+      <h2>Want to see how a specific gift was used?</h2>
+      <button class="btn-primary" onclick="showPage('page-contact')">Ask our team</button>
+    </div>
+
+    <footer>
+      <div>© 2026 Msingi Community Trust · Registered NGO, Kenya</div>
+      <div>Nairobi, Kenya</div>
+    </footer>
+  </div>
+
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>

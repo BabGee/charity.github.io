@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programs — Msingi Community Trust</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div id="app">
+
+  <header>
+    <div class="logo" onclick="goHome()">
+      <div class="logo-mark">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 1L1 5v6l7 4 7-4V5L8 1z" stroke="#F6F3EC" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="logo-word">Msingi</div>
+    </div>
+    <nav>
+      <div class="navlinks">
+        <span onclick="goHome()">Home</span>
+        <span onclick="showPage('page-programs')">Programs</span>
+        <span onclick="showPage('page-impact')">Impact</span>
+        <span onclick="showPage('page-about')">About</span>
+        <span onclick="showPage('page-contact')">Contact</span>
+      </div>
+      <button class="btn-donate-nav" onclick="goDonate()">Donate</button>
+      <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav">
+    <span onclick="mobileGo('goHome')">Home</span>
+    <span onclick="mobileGo('page-programs')">Programs</span>
+    <span onclick="mobileGo('page-impact')">Impact</span>
+    <span onclick="mobileGo('page-about')">About</span>
+    <span onclick="mobileGo('page-contact')">Contact</span>
+    <span class="mn-donate" onclick="mobileGo('goDonate')">Donate now</span>
+  </div>
+
+  <div class="page" id="page-programs">
+
+    <section class="subhero">
+      <span class="eyebrow">Programs</span>
+      <h1>Three ways we show up, on repeat.</h1>
+      <p>Msingi runs three standing programs rather than one-off campaigns. Each has its own budget, its own field officer, and its own line in the ledger — so you always know which door your gift walked through.</p>
+    </section>
+
+    <div class="detail-block reveal">
+      <div class="detail-media">
+        <div class="photo-grid">
+          <div class="photo-cell" id="pmedia-0">
+            <div class="placeholder-art" id="part-0"><svg viewBox="0 0 96 96" fill="none"><path d="M20 30h56v46a4 4 0 01-4 4H24a4 4 0 01-4-4V30z" stroke="#C89B3C" stroke-width="3"/><path d="M20 30l8-16h40l8 16" stroke="#C89B3C" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <label class="upload-btn" for="pfile-0">⤒</label>
+            <input type="file" id="pfile-0" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-0','part-0',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-1">
+            <div class="placeholder-art" id="part-1"><svg viewBox="0 0 96 96" fill="none"><path d="M30 66V38l18-14 18 14v28" stroke="#C89B3C" stroke-width="3" stroke-linejoin="round"/><path d="M40 66V50h16v16" stroke="#C89B3C" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <label class="upload-btn" for="pfile-1">⤒</label>
+            <input type="file" id="pfile-1" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-1','part-1',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-2">
+            <div class="placeholder-art" id="part-2"><svg viewBox="0 0 96 96" fill="none"><rect x="26" y="24" width="44" height="52" rx="3" stroke="#C89B3C" stroke-width="3"/><path d="M36 38h24M36 48h24M36 58h14" stroke="#C89B3C" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <label class="upload-btn" for="pfile-2">⤒</label>
+            <input type="file" id="pfile-2" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-2','part-2',this)">
+          </div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <div class="tag" style="background:var(--gold-deep);">Stationery &amp; Uniforms</div>
+        <h2>School Essentials Fund</h2>
+        <p>Every January and September, field officers visit partner primary schools to identify children turned away or shamed for missing uniforms or books. Each child receives a full uniform, shoes, and a term's stationery — sized and sourced from local tailors and stationers rather than shipped in bulk.</p>
+        <div class="breakdown">
+          <div class="breakdown-title">How your gift is spent</div>
+          <div class="breakdown-row"><div class="b-label">Uniforms &amp; shoes</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--gold);" data-width="58%"></div></div><div class="b-pct">58%</div></div>
+          <div class="breakdown-row"><div class="b-label">Books &amp; stationery</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--gold);" data-width="30%"></div></div><div class="b-pct">30%</div></div>
+          <div class="breakdown-row"><div class="b-label">Delivery &amp; admin</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--gold);" data-width="12%"></div></div><div class="b-pct">12%</div></div>
+        </div>
+        <div class="detail-cta">
+          <button class="btn-primary" onclick="goDonateWithProgram('stationery')">Give to Stationery Fund</button>
+          <span style="font-size:12.5px; color:var(--ink-soft);">$15 outfits one child for a term</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block reverse reveal">
+      <div class="detail-media">
+        <div class="photo-grid">
+          <div class="photo-cell" id="pmedia-3">
+            <div class="placeholder-art" id="part-3"><svg viewBox="0 0 96 96" fill="none"><path d="M48 20c-14 0-24 12-24 26 0 16 24 32 24 32s24-16 24-32c0-14-10-26-24-26z" stroke="#2F4A3C" stroke-width="3"/></svg></div>
+            <label class="upload-btn" for="pfile-3">⤒</label>
+            <input type="file" id="pfile-3" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-3','part-3',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-4">
+            <div class="placeholder-art" id="part-4"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="48" r="26" stroke="#2F4A3C" stroke-width="3"/><path d="M38 48h20M48 38v20" stroke="#2F4A3C" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <label class="upload-btn" for="pfile-4">⤒</label>
+            <input type="file" id="pfile-4" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-4','part-4',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-5">
+            <div class="placeholder-art" id="part-5"><svg viewBox="0 0 96 96" fill="none"><path d="M24 70V40l24-16 24 16v30" stroke="#2F4A3C" stroke-width="3" stroke-linejoin="round"/><path d="M36 70V52h24v18" stroke="#2F4A3C" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <label class="upload-btn" for="pfile-5">⤒</label>
+            <input type="file" id="pfile-5" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-5','part-5',this)">
+          </div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <div class="tag" style="background:var(--green);">Nutrition</div>
+        <h2>Widows' Nutrition Program</h2>
+        <p>540 widows across Kajiado County receive a monthly food basket — maize, beans, cooking oil, and seasonal vegetables — delivered through a rotating network of community elders who visit each household in person. Elders also flag health concerns back to our team.</p>
+        <div class="breakdown">
+          <div class="breakdown-title">How your gift is spent</div>
+          <div class="breakdown-row"><div class="b-label">Food basket</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--green);" data-width="70%"></div></div><div class="b-pct">70%</div></div>
+          <div class="breakdown-row"><div class="b-label">Elder network</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--green);" data-width="20%"></div></div><div class="b-pct">20%</div></div>
+          <div class="breakdown-row"><div class="b-label">Admin</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--green);" data-width="10%"></div></div><div class="b-pct">10%</div></div>
+        </div>
+        <div class="detail-cta">
+          <button class="btn-primary" onclick="goDonateWithProgram('nutrition')">Give to Widows' Nutrition</button>
+          <span style="font-size:12.5px; color:var(--ink-soft);">$8 covers one basket for a month</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-block reveal">
+      <div class="detail-media">
+        <div class="photo-grid">
+          <div class="photo-cell" id="pmedia-6">
+            <div class="placeholder-art" id="part-6"><svg viewBox="0 0 96 96" fill="none"><circle cx="48" cy="48" r="28" stroke="#B4552F" stroke-width="3"/><path d="M36 50l8 8 16-18" stroke="#B4552F" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <label class="upload-btn" for="pfile-6">⤒</label>
+            <input type="file" id="pfile-6" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-6','part-6',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-7">
+            <div class="placeholder-art" id="part-7"><svg viewBox="0 0 96 96" fill="none"><path d="M26 70l14-32 12 18 10-14 12 28" stroke="#B4552F" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/></svg></div>
+            <label class="upload-btn" for="pfile-7">⤒</label>
+            <input type="file" id="pfile-7" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-7','part-7',this)">
+          </div>
+          <div class="photo-cell" id="pmedia-8">
+            <div class="placeholder-art" id="part-8"><svg viewBox="0 0 96 96" fill="none"><path d="M30 30l36 36M66 30L30 66" stroke="#B4552F" stroke-width="3" stroke-linecap="round" opacity=".0"/><circle cx="48" cy="48" r="4" fill="#B4552F"/><path d="M48 30v10M48 58v10M30 48h10M58 48h10" stroke="#B4552F" stroke-width="3" stroke-linecap="round"/></svg></div>
+            <label class="upload-btn" for="pfile-8">⤒</label>
+            <input type="file" id="pfile-8" class="file-input" accept="image/*" onchange="handleGridUpload('pmedia-8','part-8',this)">
+          </div>
+        </div>
+      </div>
+      <div class="detail-info">
+        <div class="tag" style="background:var(--rust);">Boychild</div>
+        <h2>Boychild Recovery &amp; Mentorship</h2>
+        <p>A two-stage program for young men working to overcome drug dependency: first, weekly counselling with a licensed addiction counsellor; then, once stabilised, placement with a mentor in a trade — welding, boda repair, or carpentry — so recovery has somewhere to go. Families are involved throughout.</p>
+        <div class="breakdown">
+          <div class="breakdown-title">How your gift is spent</div>
+          <div class="breakdown-row"><div class="b-label">Counselling</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--rust);" data-width="45%"></div></div><div class="b-pct">45%</div></div>
+          <div class="breakdown-row"><div class="b-label">Mentorship &amp; tools</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--rust);" data-width="40%"></div></div><div class="b-pct">40%</div></div>
+          <div class="breakdown-row"><div class="b-label">Family support</div><div class="breakdown-track"><div class="breakdown-fill" style="background:var(--rust);" data-width="15%"></div></div><div class="b-pct">15%</div></div>
+        </div>
+        <div class="detail-cta">
+          <button class="btn-primary" onclick="goDonateWithProgram('boychild')">Give to Boychild Recovery</button>
+          <span style="font-size:12.5px; color:var(--ink-soft);">$40 funds one month of counselling</span>
+        </div>
+      </div>
+    </div>
+
+    <section class="section reveal">
+      <div class="section-head">
+        <h2>Programs at a glance</h2>
+        <p>The same figures shown on our homepage, side by side.</p>
+      </div>
+      <table class="compare-table">
+        <tr><th>Program</th><th>Started</th><th>People reached</th><th>Typical gift</th></tr>
+        <tr><td>Stationery &amp; Uniforms</td><td class="num">2023</td><td class="num">3,180 children</td><td class="num">$15</td></tr>
+        <tr><td>Widows' Nutrition</td><td class="num">2022</td><td class="num">540 widows</td><td class="num">$8 / mo</td></tr>
+        <tr><td>Boychild Recovery</td><td class="num">2024</td><td class="num">30 young men</td><td class="num">$40 / mo</td></tr>
+      </table>
+    </section>
+
+    <div class="cta-band reveal">
+      <h2>Not sure which program fits? The General Fund goes wherever it's needed most this month.</h2>
+      <button class="btn-primary" onclick="goDonateWithProgram('general')">Give to the General Fund</button>
+    </div>
+
+    <footer>
+      <div>© 2026 Msingi Community Trust · Registered NGO, Kenya</div>
+      <div>Nairobi, Kenya</div>
+    </footer>
+  </div>
+
+</div>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
