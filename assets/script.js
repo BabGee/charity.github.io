@@ -199,6 +199,38 @@
     document.getElementById('contactForm').style.display = 'block';
   }
 
+  // ---- Report registration form ----
+  if (document.getElementById('selectedReport')) {
+    const params = new URLSearchParams(window.location.search);
+    const reportYear = params.get('report') || '2025';
+    const reportLabels = {
+      '2023': 'Annual Report & Financials — 2023',
+      '2024': 'Annual Report & Financials — 2024',
+      '2025': 'Annual Report & Financials — 2025'
+    };
+    document.getElementById('selectedReport').textContent = reportLabels[reportYear] || reportLabels['2025'];
+  }
+
+  function submitRegister(){
+    const email = document.getElementById('rEmail').value.trim();
+    if(!email){
+      document.getElementById('rEmail').style.borderColor = 'var(--rust)';
+      return;
+    }
+    document.getElementById('rrEmail').textContent = email;
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('registerSuccess').classList.add('active');
+  }
+
+  function resetRegister(){
+    document.getElementById('rName').value = '';
+    document.getElementById('rEmail').value = '';
+    document.getElementById('rEmail').style.borderColor = 'var(--line)';
+    document.getElementById('rUse').selectedIndex = 0;
+    document.getElementById('registerSuccess').classList.remove('active');
+    document.getElementById('registerForm').style.display = 'block';
+  }
+
   // ---- Donate state — donate page only ----
   if (document.getElementById('customAmt')) {
     let state = { amount: 15, freq: 'once', method: 'mpesa', program: 'general', programLabel: 'General Fund' };
